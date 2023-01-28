@@ -1,1 +1,1 @@
-# Time Currency
+# TimeCurrency
