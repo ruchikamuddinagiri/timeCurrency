@@ -16,7 +16,7 @@ const Spinner: React.FC<SpinnerProps> = ({
     <svg
       role='status'
       className={twMerge(
-        'w-5 h-5 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600',
+        'w-5 h-5 mr-2 text-black-200 animate-spin dark:text-gray-600 fill-black-600',
         `w-${width} h-${height} ${color} ${bgColor}`
       )}
       viewBox='0 0 100 101'

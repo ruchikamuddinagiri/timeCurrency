@@ -2,63 +2,51 @@ import { object, string, TypeOf } from "zod";
 import { useEffect } from "react";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormInput from "../components/FormInput";
-import { LoadingButton } from "../components/LoadingButton";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import useStore from "../store";
+import useAppStore from "../store";
 import { ILoginResponse } from "../api/types";
 import { authApi } from "../api/authApi";
+import FormInput from "../components/FormInput";
+import { LoadingButton } from "../components/LoadingButton";
+
+type LoginInput = TypeOf<typeof loginSchema>;
 
 const loginSchema = object({
-  email: string()
-    .min(1, "Email address is required")
-    .email("Email Address is invalid"),
-  password: string()
-    .min(1, "Password is required")
-    .min(8, "Password must be more than 8 characters")
-    .max(32, "Password must be less than 32 characters"),
+  email: string().min(1, "Email address is required").email("Email Address is invalid"),
+  password: string().min(1, "Password is required").min(8, "Password must be more than 8 characters").max(32, "Password must be less than 32 characters"),
 });
 
-export type LoginInput = TypeOf<typeof loginSchema>;
-
 const LoginPage = () => {
-  const store = useStore();
+  const appStore = useAppStore();
   const navigate = useNavigate();
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitSuccessful },
-  } = methods;
+  const { reset, handleSubmit, formState: { isSubmitSuccessful } } = methods;
 
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful]);
 
   const loginUser = async (data: LoginInput) => {
     try {
-      store.setRequestLoading(true);
+      appStore.setRequestLoading(true);
       await authApi.post<ILoginResponse>("/auth/login", data);
-      store.setRequestLoading(false);
+      appStore.setRequestLoading(false);
       navigate("/profile");
     } catch (error: any) {
-      store.setRequestLoading(false);
+      appStore.setRequestLoading(false);
       const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
       toast.error(resMessage, {
-        position: "top-right",
+        position: "top-left",
       });
     }
   };
@@ -66,6 +54,7 @@ const LoginPage = () => {
   const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
     loginUser(values);
   };
+
   return (
     <section className="bg-ct-black-600 min-h-screen grid place-items-center">
       <div className="w-full">
@@ -87,7 +76,7 @@ const LoginPage = () => {
               </Link>
             </div>
             <LoadingButton
-              loading={store.requestLoading}
+              loading={appStore.requestLoading}
               textColor="text-ct-black-600"
             >
               Login

@@ -37,14 +37,15 @@ const Header = () => {
           <ul className="flex items-center gap-4">
             {!user && (
               <>
-                <li>
-                  <Link to="/register" className="text-ct-dark-600">
-                    SignUp
-                  </Link>
-                </li>
+                
                 <li>
                   <Link to="/login" className="text-ct-dark-600">
                     Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/register" className="text-ct-dark-600">
+                    SignUp
                   </Link>
                 </li>
               </>
@@ -64,8 +65,8 @@ const Header = () => {
           </ul>
         </nav>
       </header>
-      <div className="pt-4 pl-2 bg-ct-blue-600 fixed">
-        {store.requestLoading && <Spinner color="text-ct-yellow-600" />}
+      <div className="pt-4 pl-2 bg-ct-black-600 fixed">
+        {store.requestLoading && <Spinner color="text-ct-black-600" />}
       </div>
     </>
   );

@@ -11,7 +11,7 @@ type LoadingButtonProps = {
 
 export const LoadingButton: React.FC<LoadingButtonProps> = ({
   textColor = "text-white",
-  btnColor = "bg-ct-yellow-600",
+  btnColor = "bg-ct-green-600",
   children,
   loading = false,
 }) => {
@@ -19,7 +19,7 @@ export const LoadingButton: React.FC<LoadingButtonProps> = ({
     <button
       type="submit"
       className={twMerge(
-        `w-full py-3 font-semibold rounded-lg outline-none border-none flex justify-center`,
+        `w-full py-3 font-semibold squared-lg outline-none border-none flex justify-center`,
         `${btnColor} ${loading && "bg-[#ccc]"}`
       )}
     >

@@ -1,24 +1,25 @@
 import type { RouteObject } from "react-router-dom";
+import  LoginForm  from "../pages/LoginForm";
+import  RegisterForm  from "../pages/RegisterForm";
 import Layout from "../components/Layout";
-import HomePage from "../pages/home.page";
-import LoginPage from "../pages/login.page";
-import RegisterPage from "../pages/register.page";
+import HomePage from "../pages/HomePage";
+
 const authRoutes: RouteObject = {
-  path: "*",
+  path: "/auth",
   children: [
     {
-      path: "login",
-      element: <LoginPage />,
+      path: "/login",
+      element: <LoginForm />,
     },
     {
-      path: "register",
-      element: <RegisterPage />,
+      path: "/register",
+      element: <RegisterForm />,
     },
   ],
 };
 
 const normalRoutes: RouteObject = {
-  path: "*",
+  path: "/",
   element: <Layout />,
   children: [
     {
