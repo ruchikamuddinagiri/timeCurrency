@@ -36,7 +36,7 @@ const LoginPage = () => {
   const loginUser = async (data: LoginInput) => {
     try {
       appStore.setRequestLoading(true);
-      await authApi.post<ILoginResponse>("/auth/login", data);
+      await authApi.post<ILoginResponse>("/auth/Login", data);
       appStore.setRequestLoading(false);
       navigate("/profile");
     } catch (error: any) {

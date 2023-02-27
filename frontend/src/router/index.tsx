@@ -5,21 +5,21 @@ import Layout from "../components/Layout";
 import HomePage from "../pages/HomePage";
 
 const authRoutes: RouteObject = {
-  path: "/auth",
+  path: "*",
   children: [
     {
-      path: "/login",
+      path: "login",
       element: <LoginForm />,
     },
     {
-      path: "/register",
+      path: "register",
       element: <RegisterForm />,
     },
   ],
 };
 
 const normalRoutes: RouteObject = {
-  path: "/",
+  path: "*",
   element: <Layout />,
   children: [
     {
