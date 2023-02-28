@@ -1,19 +1,19 @@
 import create from 'zustand';
 import { IUser } from '../api/types';
 
-type Store = {
+type AuthStore = {
   authUser: IUser | null;
-  requestLoading: boolean;
+  isLoading: boolean;
   setAuthUser: (user: IUser | null) => void;
   setRequestLoading: (isLoading: boolean) => void;
 };
 
-const useStore = create<Store>((set) => ({
+const useAuthStore = create<AuthStore>((set) => ({
   authUser: null,
-  requestLoading: false,
+  isLoading: false,
   setAuthUser: (user) => set((state) => ({ ...state, authUser: user })),
   setRequestLoading: (isLoading) =>
-    set((state) => ({ ...state, requestLoading: isLoading })),
+    set((state) => ({ ...state, isLoading })),
 }));
 
-export default useStore;
+export default useAuthStore;

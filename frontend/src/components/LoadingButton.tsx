@@ -2,35 +2,35 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 import Spinner from "./Spinner";
 
-type LoadingButtonProps = {
+interface ButtonProps {
   loading: boolean;
-  btnColor?: string;
-  textColor?: string;
+  color?: string;
+  text?: string;
   children: React.ReactNode;
-};
+}
 
-export const LoadingButton: React.FC<LoadingButtonProps> = ({
-  textColor = "text-white",
-  btnColor = "bg-ct-green-600",
+export const Button: React.FC<ButtonProps> = ({
+  text = "Submit",
+  color = "bg-blue-500",
   children,
   loading = false,
 }) => {
+  const buttonClasses = twMerge(
+    `w-full py-3 font-semibold rounded-lg outline-none border-none flex justify-center`,
+    `${color} ${loading && "bg-[#ccc]"}`
+  );
+
   return (
-    <button
-      type="submit"
-      className={twMerge(
-        `w-full py-3 font-semibold squared-lg outline-none border-none flex justify-center`,
-        `${btnColor} ${loading && "bg-[#ccc]"}`
-      )}
-    >
+    <button type="submit" className={buttonClasses}>
       {loading ? (
         <div className="flex items-center gap-3">
           <Spinner />
-          <span className="text-slate-500 inline-block">Loading...</span>
+          <span className="text-gray-500 inline-block">Loading...</span>
         </div>
       ) : (
-        <span className={`${textColor}`}>{children}</span>
+        <span>{text}</span>
       )}
+      {children}
     </button>
   );
 };

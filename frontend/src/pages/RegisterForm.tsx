@@ -7,10 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import FormInput from "../components/FormInput";
-import { LoadingButton } from "../components/LoadingButton";
+import { Button } from "../components/LoadingButton";
 
-import { authApi } from "../api/authApi";
-import { GenericResponse } from "../api/types";
+import { api } from "../api/authApi";
+import { ApiResponse } from "../api/types";
 import useStore from "../store";
 
 const registerSchema = zObject({
@@ -48,7 +48,7 @@ const RegisterPage = () => {
   const registerUser = async (data: RegisterInput) => {
     try {
       appStore.setRequestLoading(true);
-      const response = await authApi.post<GenericResponse>("/auth/register", data);
+      const response = await api.post<ApiResponse>("/auth/register", data);
       appStore.setRequestLoading(false);
       toast.success(response.data.message as string, {
         position: "top-right",
@@ -60,7 +60,7 @@ const RegisterPage = () => {
         (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
-      toast.error(resMessage, {
+      toast.error('User already existed', {
         position: "top-right",
       });
     }
@@ -82,25 +82,22 @@ const RegisterPage = () => {
             onSubmit={handleSubmit(onSubmitHandler)}
             className="max-w-md w-full mx-auto overflow-hidden shadow-lg bg-ct-dark-200 squared-2x2 p-8 space-y-5"
           >
-            <FormInput label="Full Name" name="name" />
-            <FormInput label="Email" name="email" type="email" />
-            <FormInput label="Password" name="password" type="password" />
-            <FormInput
-              label="Confirm Password"
-              name="passwordConfirm"
-              type="password"
-            />
+            <FormInput labelText="Full Name" inputName="name" />
+            <FormInput labelText="Email" inputName="email" inputType="email" />
+            <FormInput labelText="Password" inputName="password" inputType="password" />
+            <FormInput labelText="Confirm Password" inputName="passwordConfirm" inputType="password" />
             <span className="block">
-              Already have an account?{" "}
+              Existing User?{" "}
               <Link to="/login" className="text-ct-blue-600">
                 Login Here
               </Link>
             </span>
-            <LoadingButton
-              loading={appStore.requestLoading}
-              textColor="text-ct-black-600">
-              Sign Up
-            </LoadingButton>
+            <Button
+              loading={appStore.isLoading}
+              text="Sign up"
+              color="ct-black-600">
+  
+            </Button>
           </form>
         </FormProvider>
       </div>

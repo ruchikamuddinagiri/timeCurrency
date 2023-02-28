@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import useAppStore from "../store";
-import { ILoginResponse } from "../api/types";
-import { authApi } from "../api/authApi";
+import { LoginResponse } from "../api/types";
+import { api } from "../api/authApi";
 import FormInput from "../components/FormInput";
-import { LoadingButton } from "../components/LoadingButton";
+import { Button } from "../components/LoadingButton";
 
 type LoginInput = TypeOf<typeof loginSchema>;
 
@@ -36,7 +36,7 @@ const LoginPage = () => {
   const loginUser = async (data: LoginInput) => {
     try {
       appStore.setRequestLoading(true);
-      await authApi.post<ILoginResponse>("/auth/Login", data);
+      await api.post<LoginResponse>("/auth/Login", data);
       appStore.setRequestLoading(false);
       navigate("/profile");
     } catch (error: any) {
@@ -45,7 +45,7 @@ const LoginPage = () => {
         (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString();
-      toast.error(resMessage, {
+      toast.error('Invalid credentials', {
         position: "top-left",
       });
     }
@@ -67,22 +67,23 @@ const LoginPage = () => {
             onSubmit={handleSubmit(onSubmitHandler)}
             className="max-w-md w-full mx-auto overflow-hidden shadow-lg bg-ct-dark-200 squared-2xl p-8 space-y-5"
           >
-            <FormInput label="Email" name="email" type="email" />
-            <FormInput label="Password" name="password" type="password" />
+            <FormInput labelText="Email" inputName="email" inputType="email" />
+            <FormInput labelText="Password" inputName="password" inputType="password" />
 
             <div className="text-right">
               <Link to="/forgotpassword" className="">
                 Forgot Password?
               </Link>
             </div>
-            <LoadingButton
-              loading={appStore.requestLoading}
-              textColor="text-ct-black-600"
+            <Button
+              loading={appStore.isLoading}
+              text="Login"
+              color ="ct-black-600"
             >
-              Login
-            </LoadingButton>
+              
+            </Button>
             <span className="block">
-              Need an account?{" "}
+              New User?{" "}
               <Link to="/register" className="text-ct-blue-600">
                 Sign Up Here
               </Link>
