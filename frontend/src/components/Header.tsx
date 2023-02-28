@@ -2,8 +2,8 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import useAuthStore from "../store";
 import Spinner from "./Spinner";
-import  { authApi }  from "../api/authApi";
-import  { GenericResponse }  from "../api/types";
+import  { api }  from "../api/authApi";
+import  { ApiResponse }  from "../api/types";
 
 const Header = () => {
   const authStore = useAuthStore();
@@ -12,7 +12,7 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       authStore.setRequestLoading(true);
-      await authApi.get<GenericResponse>("/auth/logout");
+      await api.get<ApiResponse>("/auth/logout");
       authStore.setRequestLoading(false);
       toast.success("Successfully logged out", {
         position: "top-right",
