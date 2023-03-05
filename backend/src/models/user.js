@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
         trim: true,
         minlength: 7,
     },
+    verificationToken:{
+        type: String,
+        trim: true
+    },
     tokens:[{
         token: {
             type: String,
