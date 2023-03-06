@@ -5,7 +5,7 @@ const Layout: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto py-5">
         <Outlet />
       </div>
     </>

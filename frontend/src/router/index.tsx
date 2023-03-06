@@ -3,32 +3,19 @@ import  LoginForm  from "../pages/LoginForm";
 import  RegisterForm  from "../pages/RegisterForm";
 import Layout from "../components/Layout";
 import HomePage from "../pages/HomePage";
+//import MainPage from "../pages/MainPage";
+import EmailVerification from "../pages/EmailVerification";
 
-const authRoutes: RouteObject = {
-  path: "*",
-  children: [
-    {
-      path: "login",
-      element: <LoginForm />,
-    },
-    {
-      path: "register",
-      element: <RegisterForm />,
-    },
-  ],
-};
+const routes: RouteObject[] = [
+  { path: '/', element: <HomePage /> },
+  { path: '/login', element: <LoginForm /> },
+  { path: '/register', element: <RegisterForm />},
+  { path: '/emailverification', element: <EmailVerification />},
 
-const normalRoutes: RouteObject = {
-  path: "*",
-  element: <Layout />,
-  children: [
-    {
-      index: true,
-      element: <HomePage />,
-    },
-  ],
-};
-
-const routes: RouteObject[] = [authRoutes, normalRoutes];
+  //{ path: '/mainpage', element: <MainPage />}
+  //{ path: '*', element: <NotFoundPage /> }
+];
 
 export default routes;
+
+
