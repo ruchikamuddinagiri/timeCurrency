@@ -3,15 +3,15 @@ import { twMerge } from "tailwind-merge";
 import Spinner from "./Spinner";
 
 interface ButtonProps {
-  loading: boolean;
+  loading?: boolean;
   color?: string;
   text?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  text = "Submit",
-  color = "bg-blue-500",
+  text = " ",
+  color = "bg-white-500",
   children,
   loading = false,
 }) => {

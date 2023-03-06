@@ -38,7 +38,7 @@ const LoginPage = () => {
       appStore.setRequestLoading(true);
       await api.post<LoginResponse>("/auth/Login", data);
       appStore.setRequestLoading(false);
-      navigate("/profile");
+      navigate("/mainpage");
     } catch (error: any) {
       appStore.setRequestLoading(false);
       const resMessage =
