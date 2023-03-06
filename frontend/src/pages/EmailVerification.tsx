@@ -10,12 +10,11 @@ import { api } from "../api/authApi";
 import { ApiResponse } from "../api/types";
 
 interface EmailVerificationFormInputs {
-  verificationCode: string;
 }; 
 export type EmailVerificationInput = TypeOf<typeof emailVerificationSchema>;
 
 const emailVerificationSchema = object({
-  verificationCode: string().min(1, "Email verification code is required"),
+  verificationCode: string(),
 });
 
 const EmailVerification = () => {
@@ -34,43 +33,24 @@ const EmailVerification = () => {
     }
   }, [isSubmitSuccessful, reset]);
 
-  const verifyEmail = async (data: EmailVerificationFormInputs) => {
-    try {
-      const response = await api.get<ApiResponse>(
-        `auth/verifyemail/${data.verificationCode}`
-      );
-      toast.success(response.data.message as string, {
-        position: "top-left",
-      });
-      navigate("/login");
-    } catch (error: any) {
-      const resMessage = (error.response && error.response.data && error.response.data.message) ||
-       error.message ||
-        error.toString();
-      toast.error('Email Invalid', {
-        position: "top-left",
-      });
-    }
-  };
-
   const onSubmit: SubmitHandler<EmailVerificationFormInputs> = (data) => {
-    verifyEmail(data);
+    navigate("/login");
   };
 
   return (
     <section className="bg-ct-black-600 min-h-screen grid place-items-center">
       <div className="w-full">
-        <h1 className="text-4x1 xl:text-5x2 text-center font-[600] text-ct-white-500 mb-7">
-          Email Verification </h1>        
-        <FormProvider {...methods}>
-        <form
+        <h1 className="text-6x1 xl:text-6x2 text-center font-[600] text-ct-green-600 mb-7">
+          User Succesfully Verified </h1>        
+        <form 
           onSubmit={handleSubmit(onSubmit)}
-          className="max-w-md w-full mx-auto overflow-hidden shadow-lg bg-ct-dark-200 squared-2xl p-8 space-y-5">        
-          <FormInput labelText="Verification Code" inputName="verificationCode"  />
-          
-          <Button> Verify Email </Button>
+          className="max-w-md w-full mx-auto overflow-hidden shadow-lg bg-ct-dark-200 squared-2xl p-8 space-y-5"> 
+        <span className="block">
+              <Link to="/login" className="text-ct-blue-600">
+                Login
+              </Link>
+            </span>
         </form>
-        </FormProvider>
       </div>
     </section>
   );

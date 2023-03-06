@@ -50,7 +50,8 @@ const RegisterPage = () => {
       appStore.setRequestLoading(true);
       const response = await api.post<ApiResponse>("/auth/register", data);
       appStore.setRequestLoading(false);
-      toast.success(response.data.message as string, {
+
+      toast.success('User Succesfully registered', {
         position: "top-left",
       });
       navigate("/emailverification");
