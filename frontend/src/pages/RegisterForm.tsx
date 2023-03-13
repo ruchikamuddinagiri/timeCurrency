@@ -5,10 +5,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import FormInput from "../components/FormInput";
 import { Button } from "../components/LoadingButton";
-
 import { api } from "../api/authApi";
 import { ApiResponse } from "../api/types";
 import useStore from "../store";
@@ -54,7 +52,7 @@ const RegisterPage = () => {
       toast.success('User Succesfully registered', {
         position: "top-left",
       });
-      navigate("/emailverification");
+      // navigate("/emailverification");
     } catch (error: any) {
       appStore.setRequestLoading(false);
       const resMessage =

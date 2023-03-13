@@ -41,7 +41,7 @@ const EmailVerification = () => {
     <section className="bg-ct-black-600 min-h-screen grid place-items-center">
       <div className="w-full">
         <h1 className="text-6x1 xl:text-6x2 text-center font-[600] text-ct-green-600 mb-7">
-          User Succesfully Verified </h1>        
+          User Successfully Verified </h1>        
         <form 
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-md w-full mx-auto overflow-hidden shadow-lg bg-ct-dark-200 squared-2xl p-8 space-y-5"> 
