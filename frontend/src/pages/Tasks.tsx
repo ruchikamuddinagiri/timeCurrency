@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { object as zObject, string as zString, TypeOf, z } from "zod";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import styled from "styled-components";
 import FormInput from "../components/FormInput";
 import { Button } from "../components/LoadingButton";
 import Sidebar from "../components/Sidebar";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const SplitContainer = styled.div`
   display: flex;
@@ -13,7 +15,7 @@ const SplitContainer = styled.div`
 
 const LeftSection = styled.div`
   width: 50%;
-  background-color: #B2BEB5;
+  background-color: #CCCCFF;
 `;
 
 const RightSection = styled.div`
@@ -24,14 +26,23 @@ interface TimeRecord {
   punchIn: Date | undefined;
   punchOut: Date | undefined;
 }
-type TaskSchema = {
-  categories: string;
-  taskName: string;
-  description: string;
-};
+
+const registerTasksSchema = zObject({
+  categories: zString().min(1, "Select the categories").max(100),
+  taskName: zString()
+    .min(1, "Task Name is required"),
+  description: zString()
+    .min(1, "Description is required")
+    .min(10, "Description must be more than 10 characters")
+    .max(100, "Password must be less than 100 characters"),
+});
+
+type TaskSchema = TypeOf<typeof registerTasksSchema>;
 
 const TasksPage: React.FC = () => {
-  const methods = useForm<TaskSchema>();
+  const methods = useForm<TaskSchema>({
+    resolver: zodResolver(registerTasksSchema),
+  });
 
   const [timeRecord, setTimeRecord] = useState<TimeRecord>({
     punchIn: undefined,
@@ -48,6 +59,7 @@ const TasksPage: React.FC = () => {
     } else {
       setTimeRecord({ ...timeRecord, punchOut: now });
     }
+    // reset();
     return undefined;
   };
 
@@ -57,7 +69,21 @@ const TasksPage: React.FC = () => {
     undefined
   );
 
+  const [punchText, setPunchText] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (loggedInTime) {
+      setPunchText(`Punched in for ${loggedInTime} seconds`)
+    } else if (punchIn) {
+      setPunchText(`Punched In. Press Punch again to punch out`);
+    } else if (!punchIn && !punchOut) {
+      setPunchText(`Please punch in and out to log your time`);
+    }
+
+  }, [punchIn, punchOut, loggedInTime]);
+
   const {
+    // reset,
     handleSubmit,
   } = methods;
 
@@ -79,9 +105,7 @@ const TasksPage: React.FC = () => {
       <SplitContainer>
         <LeftSection>
           <div>
-            {loggedInTime !== undefined
-              ? `Logged in for ${loggedInTime} seconds`
-              : "Please punch in and out to log your time"}
+            {punchText}
           </div>
         </LeftSection>
         <RightSection>

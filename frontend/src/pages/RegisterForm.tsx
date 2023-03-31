@@ -2,7 +2,6 @@ import { object as zObject, string as zString, TypeOf, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormInput from "../components/FormInput";
@@ -13,8 +12,13 @@ import useStore from "../store";
 
 const registerSchema = zObject({
   name: zString().min(1, "Full name is required").max(100),
-  email: zString().min(1, "Email address is required").email("Email Address is invalid"),
-  password: zString().min(1, "Password is required").min(8, "Password must be more than 8 characters").max(32, "Password must be less than 32 characters"),
+  email: zString()
+    .min(1, "Email address is required")
+    .email("Email Address is invalid"),
+  password: zString()
+    .min(1, "Password is required")
+    .min(8, "Password must be more than 8 characters")
+    .max(32, "Password must be less than 32 characters"),
   passwordConfirm: zString().min(1, "Please confirm your password"),
 }).refine((data) => data.password === data.passwordConfirm, {
   path: ["passwordConfirm"],
@@ -26,11 +30,11 @@ export type RegisterInput = TypeOf<typeof registerSchema>;
 const RegisterPage = () => {
   const appStore = useStore();
   const navigate = useNavigate();
-  
+
   const methods = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
   });
-  
+
   const {
     reset,
     handleSubmit,
@@ -40,7 +44,7 @@ const RegisterPage = () => {
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset();
-    }    
+    }
   }, [isSubmitSuccessful]);
 
   const registerUser = async (data: RegisterInput) => {
@@ -49,24 +53,26 @@ const RegisterPage = () => {
       const response = await api.post<ApiResponse>("/auth/register", data);
       appStore.setRequestLoading(false);
 
-      toast.success('User Succesfully registered', {
+      toast.success("User Succesfully registered", {
         position: "top-left",
       });
       // navigate("/emailverification");
     } catch (error: any) {
       appStore.setRequestLoading(false);
       const resMessage =
-        (error.response && error.response.data && error.response.data.message) ||
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
         error.message ||
         error.toString();
-      toast.error('User already existed', {
+      toast.error("User already existed", {
         position: "top-right",
       });
     }
   };
 
   const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
-    console.log("I was called");
+    //console.log("I was called");
     registerUser(values);
   };
 
@@ -83,8 +89,16 @@ const RegisterPage = () => {
           >
             <FormInput labelText="Full Name" inputName="name" />
             <FormInput labelText="Email" inputName="email" inputType="email" />
-            <FormInput labelText="Password" inputName="password" inputType="password" />
-            <FormInput labelText="Confirm Password" inputName="passwordConfirm" inputType="password" />
+            <FormInput
+              labelText="Password"
+              inputName="password"
+              inputType="password"
+            />
+            <FormInput
+              labelText="Confirm Password"
+              inputName="passwordConfirm"
+              inputType="password"
+            />
             <span className="block">
               Existing User?{" "}
               <Link to="/login" className="text-ct-blue-600">
@@ -94,9 +108,8 @@ const RegisterPage = () => {
             <Button
               loading={appStore.isLoading}
               text="Sign up"
-              color="ct-black-600">
-  
-            </Button>
+              color="ct-black-600"
+            ></Button>
           </form>
         </FormProvider>
       </div>
