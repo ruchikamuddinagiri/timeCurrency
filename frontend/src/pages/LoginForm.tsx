@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import useAppStore from "../store";
 import { LoginResponse } from "../api/types";
-import { api } from "../api/authApi";
+import  api  from "../api/authApi";
 import FormInput from "../components/FormInput";
 import { Button } from "../components/LoadingButton";
 
@@ -79,8 +79,7 @@ const LoginPage = () => {
               loading={appStore.isLoading}
               text="Login"
               color ="ct-black-600"
-            >
-              
+            >              
             </Button>
             <span className="block">
               New User?{" "}

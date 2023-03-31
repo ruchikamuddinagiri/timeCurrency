@@ -1,10 +1,10 @@
 import create from 'zustand';
-import { IUser } from '../api/types';
+import { User } from '../api/types';
 
 type AuthStore = {
-  authUser: IUser | null;
+  authUser: User | null;
   isLoading: boolean;
-  setAuthUser: (user: IUser | null) => void;
+  setAuthUser: (user: User | null) => void;
   setRequestLoading: (isLoading: boolean) => void;
 };
 

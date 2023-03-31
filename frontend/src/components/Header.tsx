@@ -34,33 +34,22 @@ const Header = () => {
               Time Currency
             </Link>
           </div>
-          <ul className="flex items-center gap-4">
+          <ul className="flex items-center gap-2">
             {!user && (
               <>
                 <li>
-                  <Link to="/login" className="text-ct-dark-600">
+                  <Link to="/login" className="text-ct-dark-500 text-2xl font-semibold">
                     Login
                   </Link>
                 </li>
                 <li>
-                  <Link to="/register" className="text-ct-dark-600">
+                  <Link to="/register" className="text-ct-dark-500 text-2xl font-semibold">
                     Sign up
                   </Link>
                 </li>
               </>
             )}
-            {user && (
-              <>
-                <li>
-                  <Link to="/profile" className="text-ct-dark-600">
-                    Profile
-                  </Link>
-                </li>
-                <li className="cursor-pointer" onClick={handleLogout}>
-                  Logout
-                </li>
-              </>
-            )}
+
           </ul>
         </nav>
       </header>

@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { Button } from "../components/LoadingButton";
+import Spinner from "./Spinner";
 
-const SidebarData = [  {    title: 'MainPage',    path: '/mainpage',    icon: <FaBars />,  },  {    title: 'Team',    path: '/team',    icon: <FaBars />,  },  {    title: 'Tasks',    path: '/tasks',    icon: <FaBars />,  },  {    title: 'Chats',    path: '/chats',    icon: <FaBars />,  },  {    title: 'Analytics',    path: '/analytics',    icon: <FaBars />,  },];
+const SidebarData = [  {   title: 'Home', path: '/mainpage',   icon: <FaBars />,  },
+                      {    title: 'Tasks',    path: '/tasks',      icon: <FaBars />,  },  
+                      {    title: 'Analytics',path: '/analytics',  icon: <FaBars />,  },
+                      {  title: 'Profile',    path: '/profile',     icon: <FaBars />,  },   
+                      {  title: 'Settings',    path: '/settings',     icon: <FaBars />,  }, 
+                      {  title: 'Logout',    path: '/logout',     icon: <FaBars />,  }, ];
 
 const Navbar = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
   height: 3.5rem;
-  background-color: #000080;
+  background-color: #000000;
 `;
 
 const MenuIconOpen = styled(Link)`
@@ -33,7 +40,7 @@ const MenuIconClose = styled(Link)`
 const SidebarMenu = styled.div<{ close: boolean }>`
   width: 250px;
   height: 100vh;
-  background-color: #000080;
+  background-color: #000000;
   position: fixed;
   top: 0;
   left: ${({ close }) => (close ? '0' : '-100%')};
@@ -51,15 +58,12 @@ const MenuItems = styled.li`
 `;
 
 const MenuItemLinks = styled(Link)`
-  display: flex;
-  align-items: center;
-  padding: 0 2rem;
-  font-size: 20px;
-  text-decoration: none;
-  color: #ffffff;
+  display: flex; align-items: center;
+  padding: 0 2rem; font-size: 20px;
+  text-decoration: none; color: #ffffff;
   &:hover {
     background-color: #ffffff;
-    color: #000080;
+    color: #000000;
     width: 100%;
     height: 45px;
     text-align: center;
@@ -94,7 +98,7 @@ const Sidebar: React.FC = () => {
           </MenuItems>
         ))}
       </SidebarMenu>
-    </>
+      </>
   );
 };
 
