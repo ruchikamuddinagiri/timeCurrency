@@ -7,6 +7,8 @@ import FormInput from "../components/FormInput";
 import { Button } from "../components/LoadingButton";
 import Sidebar from "../components/Sidebar";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ApiResponse } from "../api/types";
+import { api } from "../api/authApi";
 
 const SplitContainer = styled.div`
   display: flex;
@@ -49,7 +51,7 @@ const TasksPage: React.FC = () => {
     punchOut: undefined,
   });
 
-  const handlePunch = (values: TaskSchema) => {
+  const handlePunch = async (values: TaskSchema) => {
     //console.log('in handle punch:  ', values);
     //console.log('in handle punch, onion out ', values.description);
     //console.log('in handle punch, onion out ', values.categories);
@@ -59,6 +61,7 @@ const TasksPage: React.FC = () => {
     } else {
       setTimeRecord({ ...timeRecord, punchOut: now });
     }
+    const response = await api.post<ApiResponse>("/auth/addTask", values);
     // reset();
     return undefined;
   };
