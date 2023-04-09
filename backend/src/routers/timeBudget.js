@@ -6,9 +6,12 @@ const path = require('path')
 const router = new express.Router()
 
 //create time budget
-router.post('/api/auth/addTask', async (req, res)=>{
-    const budget = new Budget(req.body)
-    console.log(budget)
+router.post('/api/auth/addTask', auth, async (req, res)=>{
+    const budget = new Budget({
+        ...req.body,
+        owner: req.user._id
+    })
+
     try{
         await budget.save()
         res.status(201).send({budget})
@@ -20,10 +23,11 @@ router.post('/api/auth/addTask', async (req, res)=>{
 })
 
 //get time budgets
-router.get('/api/auth/tasks', async (req, res)=>{
+router.get('/api/auth/budgets', auth, async (req, res)=>{
     try{
-        const tasks = await Budget.find({owner: req.user._id})
-        res.send(req.user.tasks)
+        const budgets = await Budget.find({owner: req.user._id})
+        console.log(budgets)
+        res.send({budgets})
     }
     catch(e){
         res.status(500).send()
@@ -76,4 +80,5 @@ router.delete('/api/auth/tasks/:id', auth, async (req, res) => {
         res.status(400).send()
     }
 })
+
 module.exports = router

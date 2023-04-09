@@ -7,21 +7,6 @@ const jwt = require('jsonwebtoken')
 
 const router = new express.Router()
 
-//login page
-router.get('/', (req,res) => {
-    res.send("Home")
-    //res.render('../views/index.ejs')
-    //res.redirect("https://localhost:3000/login")
-})
-
-router.get('/login', (req,res)=>{
-    //res.render('../views/register.ejs')
-})
-//register page
-router.get('/register', (req,res)=>{
-    //res.render('../views/register.ejs')
-})
-
 //email verification
 router.post('/api/verify', async (req, res)=>{
 
@@ -119,7 +104,7 @@ router.post('/api/auth/register', async (req, res) => {
 })
 
 //log in
-router.post('/api/auth/login', async (req, res) => {
+router.post('/api/auth/login', auth, async (req, res) => {
     try{
         //find user by email id and password in req.body
 

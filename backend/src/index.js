@@ -1,12 +1,15 @@
 const express = require('express')
 const path = require('path')
 const userRouter = require('./routers/user')
+const budgetRouter = require('./routers/timeBudget')
+
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
 
 require('./db/mongoose')
 
 const User = require('./models/user.js')
+const Budget = require('./models/timeBudget')
 
 const app = express()
 const port = process.env.PORT
@@ -21,6 +24,7 @@ const corsOptions ={
 app.use(cors(corsOptions));
 
 app.use(userRouter)
+app.use(budgetRouter)
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 

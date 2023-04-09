@@ -10,10 +10,14 @@ const budgetSchema = new mongoose.Schema({
         type: String, 
         trim: true,
     },
-    label:{
+    category:{
         type: String,
         required: true, 
         trim: true,
+    },
+    owner:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 }, {
     timestamps: true

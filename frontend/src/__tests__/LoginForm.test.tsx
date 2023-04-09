@@ -5,7 +5,7 @@ import '@testing-library/jest-dom'
 // import LoginForm from "../pages/LoginForm";
 
 describe("<LoginForm />", () => {
-  test("should display a blank login form, with remember me checked by default", async () => {
+  test("should display a blank login form", async () => {
     // ???
   });
 });
