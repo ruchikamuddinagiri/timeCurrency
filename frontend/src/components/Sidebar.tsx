@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { Button } from "../components/LoadingButton";
-import Spinner from "./Spinner";
+
 
 const SidebarData = [  {   title: 'Home', path: '/mainpage',   icon: <FaBars />,  },
                       {    title: 'Tasks',    path: '/tasks',      icon: <FaBars />,  },  

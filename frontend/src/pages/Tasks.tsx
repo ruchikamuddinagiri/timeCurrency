@@ -9,6 +9,8 @@ import Sidebar from "../components/Sidebar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiResponse } from "../api/types";
 import { api } from "../api/authApi";
+import TaskProgress from "../components/TaskProgress";
+
 
 const SplitContainer = styled.div`
   display: flex;
@@ -16,12 +18,11 @@ const SplitContainer = styled.div`
 `;
 
 const LeftSection = styled.div`
-  width: 50%;
-  background-color: #CCCCFF;
+  width: 60%;
 `;
 
 const RightSection = styled.div`
-  width: 50%;
+  width: 40%;
 `;
 
 interface TimeRecord {
@@ -55,6 +56,7 @@ const TasksPage: React.FC = () => {
     //console.log('in handle punch:  ', values);
     //console.log('in handle punch, onion out ', values.description);
     //console.log('in handle punch, onion out ', values.categories);
+
     const now = new Date();
     if (!punchIn) {
       setTimeRecord({ ...timeRecord, punchIn: now });
@@ -65,6 +67,13 @@ const TasksPage: React.FC = () => {
     // reset();
     return undefined;
   };
+
+useEffect (() => {
+  api.get<ApiResponse>("/getTask").then((response) => {
+    //console.log(response);
+    
+  });
+}, []);
 
   const { punchIn, punchOut } = timeRecord;
 
@@ -86,7 +95,7 @@ const TasksPage: React.FC = () => {
   }, [punchIn, punchOut, loggedInTime]);
 
   const {
-    // reset,
+    //reset,
     handleSubmit,
   } = methods;
 
@@ -102,6 +111,8 @@ const TasksPage: React.FC = () => {
     handlePunch(values);
   };
 
+  
+
   return (
     <>
       <Sidebar />
@@ -110,7 +121,11 @@ const TasksPage: React.FC = () => {
           <div>
             {punchText}
           </div>
+          <TaskProgress/>
+         
         </LeftSection>
+
+
         <RightSection>
           <section className="bg-ct-black-600 min-h-screen grid place-items-center">
             <div className="w-full">
@@ -142,6 +157,7 @@ const TasksPage: React.FC = () => {
                       <option value="travel">Travel</option>
                       <option value="Leisure">Leisure</option>
                       <option value="entertainment">Entertainment</option>
+                      <option value="others">Others</option>
                     </select>
                   </div>
                   <FormInput

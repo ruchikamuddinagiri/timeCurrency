@@ -7,6 +7,7 @@ import MainPage from "../pages/MainPage";
 import EmailVerification from "../pages/EmailVerification";
 import Sidebar from '../components/Sidebar';
 import Tasks from "../pages/Tasks";
+import ProfilePage from "../pages/Profile";
 
 const routes: RouteObject[] = [
   { path: '/', element: <HomePage /> },
@@ -16,6 +17,7 @@ const routes: RouteObject[] = [
   { path: '/mainpage', element: <MainPage />},
   { path: '/sidebar', element: <Sidebar />},
   { path: '/tasks', element: <Tasks /> },
+  { path: '/profile', element: <ProfilePage />},
   //{ path: '*', element: <NotFoundPage /> }
 ];
 
