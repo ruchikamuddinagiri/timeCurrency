@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { object as zObject, string as zString, TypeOf, z } from "zod";
+import { object as zObject, string as zString, TypeOf, z, ZodDate } from "zod";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import styled from "styled-components";
 import FormInput from "../components/FormInput";
@@ -10,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiResponse } from "../api/types";
 import { api } from "../api/authApi";
 import TaskProgress from "../components/TaskProgress";
-
 
 const SplitContainer = styled.div`
   display: flex;
@@ -32,8 +31,7 @@ interface TimeRecord {
 
 const registerTasksSchema = zObject({
   categories: zString().min(1, "Select the categories").max(100),
-  taskName: zString()
-    .min(1, "Task Name is required"),
+  taskName: zString().min(1, "Task Name is required"),
   description: zString()
     .min(1, "Description is required")
     .min(10, "Description must be more than 10 characters")
@@ -42,6 +40,15 @@ const registerTasksSchema = zObject({
 
 type TaskSchema = TypeOf<typeof registerTasksSchema>;
 
+export type TaskDataType = {
+  category: string;
+  taskName: string;
+  description: string;
+  startTime: Date;
+  endTime?: Date;
+  status: string;
+  taskId: string;
+};
 const TasksPage: React.FC = () => {
   const methods = useForm<TaskSchema>({
     resolver: zodResolver(registerTasksSchema),
@@ -51,6 +58,10 @@ const TasksPage: React.FC = () => {
     punchIn: undefined,
     punchOut: undefined,
   });
+
+  const [tasksList, setTasksList] = useState<TaskDataType[]>([]);
+
+  const [updateTasksList, setUpdateTaskList] = useState<boolean>(true);
 
   const handlePunch = async (values: TaskSchema) => {
     //console.log('in handle punch:  ', values);
@@ -63,17 +74,23 @@ const TasksPage: React.FC = () => {
     } else {
       setTimeRecord({ ...timeRecord, punchOut: now });
     }
-    const response = await api.post<ApiResponse>("/auth/addTask", values);
-    // reset();
+    // console.log("Adding task ", values);
+
+    const response = await api.post<ApiResponse>("/addTask", {
+      name: values.taskName,
+      category: values.categories,
+      description: values.description,
+      startTime: now,
+      status: "In Progress",
+    });
+
+    // console.log(response);
+    setUpdateTaskList(true);
+
+    reset();
     return undefined;
   };
 
-useEffect (() => {
-  api.get<ApiResponse>("/getTask").then((response) => {
-    //console.log(response);
-    
-  });
-}, []);
 
   const { punchIn, punchOut } = timeRecord;
 
@@ -83,21 +100,17 @@ useEffect (() => {
 
   const [punchText, setPunchText] = useState<string | undefined>(undefined);
 
-  useEffect(() => {
-    if (loggedInTime) {
-      setPunchText(`Punched in for ${loggedInTime} seconds`)
-    } else if (punchIn) {
-      setPunchText(`Punched In. Press Punch again to punch out`);
-    } else if (!punchIn && !punchOut) {
-      setPunchText(`Please punch in and out to log your time`);
-    }
+  // useEffect(() => {
+  //   if (loggedInTime) {
+  //     setPunchText(`Punched in for ${loggedInTime} seconds`);
+  //   } else if (punchIn) {
+  //     setPunchText(`Punched In. Press Punch again to punch out`);
+  //   } else if (!punchIn && !punchOut) {
+  //     setPunchText(`Please punch in and out to log your time`);
+  //   }
+  // }, [punchIn, punchOut, loggedInTime]);
 
-  }, [punchIn, punchOut, loggedInTime]);
-
-  const {
-    //reset,
-    handleSubmit,
-  } = methods;
+  const { reset, handleSubmit } = methods;
 
   useEffect(() => {
     setLoggedInTime(
@@ -111,20 +124,14 @@ useEffect (() => {
     handlePunch(values);
   };
 
-  
-
   return (
     <>
       <Sidebar />
       <SplitContainer>
         <LeftSection>
-          <div>
-            {punchText}
-          </div>
-          <TaskProgress/>
-         
+          <div>{punchText}</div>          
+          <TaskProgress tasks={tasksList} setTasksList={setTasksList} updateTasksList={updateTasksList} setUpdateTaskList={setUpdateTaskList} />
         </LeftSection>
-
 
         <RightSection>
           <section className="bg-ct-black-600 min-h-screen grid place-items-center">
@@ -173,7 +180,7 @@ useEffect (() => {
 
                   <Button
                     //loading={appStore.isLoading}
-                    text="Punch"
+                    text="Add Task"
                     color="ct-black-600"
                   ></Button>
                 </form>

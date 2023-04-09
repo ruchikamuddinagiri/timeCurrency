@@ -14,11 +14,11 @@ router.post('/api/addTask', auth, async (req, res)=>{
 
     try{
         await task.save()
-        res.status(201).send({task})
+        res.status(200).send({task})
 
     } catch(error){
         console.log(error)
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 })
 
@@ -30,7 +30,7 @@ router.get('/api/tasks', auth, async (req, res)=>{
         res.send({tasks})
     }
     catch(e){
-        res.status(500).send()
+        res.status(500).send(e)
     }
 })
 
@@ -43,41 +43,41 @@ router.get('/api/tasks/:id', auth, async (req, res) => {
             return res.status(404).send()
         }
     } catch(e) {
-        res.status(500).send()
+        res.status(500).send(e)
     }
     
 })
 
 //update time budget
-router.patch('/api/tasks/:id', auth, async (req, res) => {
-    try{
-        const task = await Task.findOne({_id: req.params.id, owner: req.user._id})
-    
-    if(!task){
-        //send 404
-        return res.status(404).send()
+router.patch("/api/tasks/:id", auth, async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!task) {
+      //send 404
+      return res.status(404).send();
     }
-    else{
-    updates.forEach((update) => task[update] = req.body[update])
-    await task.save()
-    res.send(task)
-    }
-}
-    catch(e){
-        res.status(400).send({error:e})
-    }
-})
+    res.send(task);
+  } catch (e) {
+    console.log(e);
+    res.status(400).send({ error: e });
+  }
+});
 //delete time budget
 router.delete('/api/tasks/:id', auth, async (req, res) => {
     try{
-        const task = await Budget.findOneAndDelete({_id:req.params.id, owner: req.user._id})
+        const task = await Task.findOneAndDelete({_id:req.params.id, owner: req.user._id})
         if(!task){
             //task not found
             res.status(404).send()
         }
         res.send(task)
     } catch(e){
-        res.status(400).send()
+        console.log(e);
+        res.status(500).send(e)
     }
 })
 
