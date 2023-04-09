@@ -9,7 +9,7 @@ const cors = require('cors');
 require('./db/mongoose')
 
 const User = require('./models/user.js')
-const Budget = require('./models/timeBudget')
+const Budget = require('./models/tasks')
 
 const app = express()
 const port = process.env.PORT
