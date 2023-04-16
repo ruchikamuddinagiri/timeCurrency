@@ -1,4 +1,3 @@
-import React from 'react';
 import Layout from '../components/Layout';
 const HomePage= () => {
   
@@ -6,7 +5,7 @@ const HomePage= () => {
   <>
   <Layout />
  
-        <img src="./src/assets/pic.png"/>
+        <img src="./src/assets/Time.png"/>
   
   </>
   );

@@ -56,7 +56,7 @@ const RegisterPage = () => {
       toast.success("User Succesfully registered", {
         position: "top-left",
       });
-      // navigate("/emailverification");
+       navigate("/emailverification");
     } catch (error: any) {
       appStore.setRequestLoading(false);
       const resMessage =
