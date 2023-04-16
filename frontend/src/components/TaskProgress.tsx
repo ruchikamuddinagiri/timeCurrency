@@ -4,18 +4,8 @@ import { ApiResponse } from "../api/types";
 import { api } from "../api/authApi";
 import { useEffect } from "react";
 
-const handleEditTask = async (task: TaskDataType, setUpdateTaskList: any) => {
-    // console.log('updating task with id : ', task.taskId);
-
-    // const response = await api.patch<ApiResponse>(`/tasks/${task.taskId}`, {
-    //     status: "Completed",
-    //     endTime: Date.now(),
-    // });
-    // console.log('updated with id,', response);
-    // setUpdateTaskList(true);
-
-    setTimeout(() => {
-      const response = api
+const handlePunchOutTask = async (task: TaskDataType, setUpdateTaskList: any) => {
+      api
         .patch<ApiResponse>(`/tasks/${task.taskId}`, {
           status: "Completed",
           endTime: Date.now(),
@@ -26,10 +16,9 @@ const handleEditTask = async (task: TaskDataType, setUpdateTaskList: any) => {
         })
         .catch((error) => {
           console.log("Error with update,", error);
-        });
-    }, 1000);
-    
+        }); 
 };
+
 
 const handleDeleteTask = (taskId: string, setUpdateTaskList: any) => {
   api.delete<ApiResponse>(`/tasks/${taskId}`).then((response) => {
@@ -84,13 +73,8 @@ const TaskProgress = (props: TaskProgressProps) => {
 
       {Array.from(props.tasks).map((task) => (
         <Card
-          title={task.taskName}
-          description={task.description}
-          status={task.status}
-          category={task.category}
-          startTime={new Date(task.startTime).toLocaleString()}
-          endTime={task.endTime ? new Date(task.endTime).toLocaleString() : undefined}
-          onEditClick={() => handleEditTask(task, props.setUpdateTaskList)}
+          task={task}
+          onClickPunchOut={() => handlePunchOutTask(task, props.setUpdateTaskList)}
           onDeleteClick={() =>
             handleDeleteTask(task.taskId, props.setUpdateTaskList)
           }

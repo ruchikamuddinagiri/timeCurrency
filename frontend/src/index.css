@@ -9,17 +9,66 @@ html{
 }
 
 .task-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    margin: 1rem;
-    padding: 1rem;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: flex-end;
-    background-color: #ddd;
-  }
-  
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-card .card-body {
+  padding: 20px;
+}
+
+.task-card .card-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.task-card .card-text {
+  font-size: 1em;
+  margin-bottom: 5px;
+}
+
+.task-card .card-subtitle {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.button-container button {
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.task-card .button-container button:last-child {
+  margin-right: 0;
+}
+
+.task-card .button-container button.btn-edit {
+  background-color: #ffcc00;
+  border-color: #ffcc00;
+  color: #fff;
+}
+
+.task-card .button-container button.btn-delete {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.task-card .button-container button.btn-punch {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+

@@ -17,11 +17,11 @@ const SplitContainer = styled.div`
 `;
 
 const LeftSection = styled.div`
-  width: 60%;
+  width: 50%;
 `;
 
 const RightSection = styled.div`
-  width: 40%;
+  width: 50%;
 `;
 
 interface TimeRecord {

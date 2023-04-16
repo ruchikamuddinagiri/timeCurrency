@@ -8,6 +8,8 @@ import EmailVerification from "../pages/EmailVerification";
 import Sidebar from '../components/Sidebar';
 import Tasks from "../pages/Tasks";
 import ProfilePage from "../pages/Profile";
+import Analytics from "../pages/Analytics";
+import Logout from "../pages/Logout";
 
 const routes: RouteObject[] = [
   { path: '/', element: <HomePage /> },
@@ -18,6 +20,8 @@ const routes: RouteObject[] = [
   { path: '/sidebar', element: <Sidebar />},
   { path: '/tasks', element: <Tasks /> },
   { path: '/profile', element: <ProfilePage />},
+  { path: '/analytics', element: <Analytics />},
+  { path: '/logout', element: <Logout />}
   //{ path: '*', element: <NotFoundPage /> }
 ];
 

@@ -5,6 +5,7 @@ import { api } from "../api/authApi";
 import { ApiResponse } from "../api/types";
 import useStore from "../store";
 import Sidebar from "../components/Sidebar"
+import { Button } from "react-bootstrap";
 
 const ProfilePage = () => {
   const store = useStore();
@@ -13,7 +14,7 @@ const ProfilePage = () => {
   const getUser = async () => {
     try {
       store.setRequestLoading(true);
-      const response = await api.get<ApiResponse>("  ");
+      const response = await api.get<ApiResponse>("/profile");
       store.setRequestLoading(false);
       store.setAuthUser(response.data.data.user);
     } catch (error: any) {
@@ -27,7 +28,6 @@ const ProfilePage = () => {
       toast.error(resMessage, {
         position: "top-right",
       });
-      //navigate("/login");
     }
   };
 
@@ -49,9 +49,14 @@ const ProfilePage = () => {
             <p className="mb-4">ID: {user?.id}</p>
             <p className="mb-4">Name: {user?.name}</p>
             <p className="mb-4">Email: {user?.email}</p>
-            <p className="mb-4">Role: {user?.role}</p>
+          
           </div>
         </div>
+        <div className="button-container d-flex justify-content-between">
+          <Button variant="danger" >
+            Edit
+          </Button> 
+          </div>
       </div>
     </section>
     </>

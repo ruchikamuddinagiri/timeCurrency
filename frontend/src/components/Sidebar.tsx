@@ -7,8 +7,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 const SidebarData = [  {   title: 'Home', path: '/mainpage',   icon: <FaBars />,  },
                       {    title: 'Tasks',    path: '/tasks',      icon: <FaBars />,  },  
                       {    title: 'Analytics',path: '/analytics',  icon: <FaBars />,  },
-                      {  title: 'Profile',    path: '/profile',     icon: <FaBars />,  },   
-                      {  title: 'Settings',    path: '/settings',     icon: <FaBars />,  }, 
+                      {  title: 'Profile',    path: '/profile',     icon: <FaBars />,  },                    
                       {  title: 'Logout',    path: '/logout',     icon: <FaBars />,  }, ];
 
 const Navbar = styled.div`
