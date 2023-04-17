@@ -16,8 +16,9 @@ const port = process.env.PORT
 
 app.use(express.json())
 
+const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000']
 const corsOptions ={
-    origin:'http://localhost:3000', 
+    origin: allowedOrigins, 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }

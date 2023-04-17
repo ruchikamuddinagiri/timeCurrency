@@ -61,7 +61,14 @@ userSchema.methods.generateAuthToken = async function() {
     await user.save()
     return token
 }
-
+//verification token
+userSchema.methods.generateVerififcationToken = async function() {
+    const user = this
+    const token = jwt.sign({_id: user._id.toString() }, process.env.JWT_SECRET)
+    user.verificationToken = token
+    await user.save()
+    return token
+}
 //userSchema.statics fns can be accessed directly by model
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({email})

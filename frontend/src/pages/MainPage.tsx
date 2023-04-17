@@ -1,6 +1,7 @@
 import Sidebar from '../components/Sidebar'
 
 const MainPage = () => {
+  console.log()
   return (
     <>
     <Sidebar/>  

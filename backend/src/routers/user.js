@@ -4,6 +4,7 @@ const auth = require('../middleware/auth')
 const path = require('path')
 const sgMail = require('@sendgrid/mail')
 const jwt = require('jsonwebtoken')
+const { hostname } = require('os')
 
 const router = new express.Router()
 
@@ -39,11 +40,14 @@ router.post('/api/verify', async (req, res)=>{
       sgMail
         .send(msg)
         .then(() => {
+            console.log(req.get(hostname))
             console.log('Email sent')
+           
         })
         .catch((error) => {
             console.error(error)
         })
+        
         res.end()
     
 
@@ -68,10 +72,13 @@ router.get('/api/verify', async (req, res)=>{
                 user.verificationToken =  undefined
                 user.save()
                 //verified
-                res.sendStatus(200)
+                //res.sendStatus(200)
                 
                 //redirect to login page
-                //res.redirect(req.get('host')+":3000/login")
+                let host = req.get('host')
+                host = host.slice(0, host.length-5)
+                console.log('http://'+ host+":3000/emailverification")
+                res.redirect('http://'+ host+":3000/emailverification")
             }
         } catch(error){
             //token not found for the user, ask to register again
@@ -94,6 +101,31 @@ router.post('/api/auth/register', async (req, res) => {
         await user.save()
         //create a token for the new user
         const token = await user.generateAuthToken()
+        const verificationToken = await user.generateVerififcationToken()
+
+        host=req.get('host')
+        link="http://"+req.get('host')+"/api/verify/?id="+verificationToken
+        console.log(link)
+
+        sgMail.setApiKey("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")
+
+        const msg = {
+            to: req_user.email, // Change to your recipient
+            from: 'rrmuddinagiri@gmail.com', // Change to your verified sender
+            subject: 'Verify your TimeCurrency email address',
+            text: 'Click on the link below to verify your email address',
+            html: '<a href="'+link+'">Verify!</a>',
+        }
+
+        sgMail
+            .send(msg)
+            .then(() => {
+                console.log('Email sent')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+
         res.setHeader('Cache-Control', 'private');
         res.cookie('auth_token', token)
         res.status(201).send({user, token})
@@ -118,6 +150,21 @@ router.post('/api/auth/login', auth, async (req, res) => {
 
     } catch(e) {
         res.status(400).send()
+    }
+})
+
+//logout
+router.post('/api/auth/logout', auth, async(req,res)=>{
+    try{
+        res.clearCookie('auth_token')
+        req.user.tokens = req.user.tokens.filter((token)=>{
+            return token.token != req.token
+        })
+        console.log(req.user.tokens)
+        await req.user.save()
+        res.status(200).send()
+    }catch(e){
+        res.status(500).send()
     }
 })
 
