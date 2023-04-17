@@ -63,8 +63,6 @@ const TaskProgress = (props: TaskProgressProps) => {
         console.log("retrieved data: ", tasksResponse);
         props.setTasksList(tasksResponse);
         props.setUpdateTaskList(false);
-
-        // response.data..map(task => {})
       });
     }
   }, [props.updateTasksList]);
