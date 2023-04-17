@@ -78,11 +78,12 @@ const LoginPage = () => {
             onSubmit={handleSubmit(onSubmitHandler)}
             className="max-w-md w-full mx-auto overflow-hidden shadow-lg bg-ct-dark-200 squared-2xl p-8 space-y-5"
           >
-            <FormInput labelText="Email" inputName="email" inputType="email" />
+            <FormInput labelText="Email" inputName="email" inputType="email" methods={methods}/>
             <FormInput
               labelText="Password"
               inputName="password"
               inputType="password"
+              methods={methods}
             />
 
             <div className="text-right">

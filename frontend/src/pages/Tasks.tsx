@@ -29,7 +29,7 @@ interface TimeRecord {
   punchOut: Date | undefined;
 }
 
-const registerTasksSchema = zObject({
+export const registerTasksSchema = zObject({
   categories: zString().min(1, "Select the categories").max(100),
   taskName: zString().min(1, "Task Name is required"),
   description: zString()
@@ -64,17 +64,7 @@ const TasksPage: React.FC = () => {
   const [updateTasksList, setUpdateTaskList] = useState<boolean>(true);
 
   const handlePunch = async (values: TaskSchema) => {
-    //console.log('in handle punch:  ', values);
-    //console.log('in handle punch, onion out ', values.description);
-    //console.log('in handle punch, onion out ', values.categories);
-
     const now = new Date();
-    if (!punchIn) {
-      setTimeRecord({ ...timeRecord, punchIn: now });
-    } else {
-      setTimeRecord({ ...timeRecord, punchOut: now });
-    }
-    // console.log("Adding task ", values);
 
     const response = await api.post<ApiResponse>("/addTask", {
       name: values.taskName,
@@ -84,13 +74,11 @@ const TasksPage: React.FC = () => {
       status: "In Progress",
     });
 
-    // console.log(response);
     setUpdateTaskList(true);
 
     reset();
     return undefined;
   };
-
 
   const { punchIn, punchOut } = timeRecord;
 
@@ -99,16 +87,6 @@ const TasksPage: React.FC = () => {
   );
 
   const [punchText, setPunchText] = useState<string | undefined>(undefined);
-
-  // useEffect(() => {
-  //   if (loggedInTime) {
-  //     setPunchText(`Punched in for ${loggedInTime} seconds`);
-  //   } else if (punchIn) {
-  //     setPunchText(`Punched In. Press Punch again to punch out`);
-  //   } else if (!punchIn && !punchOut) {
-  //     setPunchText(`Please punch in and out to log your time`);
-  //   }
-  // }, [punchIn, punchOut, loggedInTime]);
 
   const { reset, handleSubmit } = methods;
 
@@ -129,8 +107,13 @@ const TasksPage: React.FC = () => {
       <Sidebar />
       <SplitContainer>
         <LeftSection>
-          <div>{punchText}</div>          
-          <TaskProgress tasks={tasksList} setTasksList={setTasksList} updateTasksList={updateTasksList} setUpdateTaskList={setUpdateTaskList} />
+          <div>{punchText}</div>
+          <TaskProgress
+            tasks={tasksList}
+            setTasksList={setTasksList}
+            updateTasksList={updateTasksList}
+            setUpdateTaskList={setUpdateTaskList}
+          />
         </LeftSection>
 
         <RightSection>
@@ -171,18 +154,16 @@ const TasksPage: React.FC = () => {
                     labelText="Task Name"
                     inputName="taskName"
                     inputType="text"
+                    methods={methods}
                   />
                   <FormInput
                     labelText="Description"
                     inputName="description"
                     inputType="text"
+                    methods={methods}
                   />
 
-                  <Button
-                    //loading={appStore.isLoading}
-                    text="Add Task"
-                    color="ct-black-600"
-                  ></Button>
+                  <Button text="Add Task" color="ct-black-600"></Button>
                 </form>
               </FormProvider>
             </div>
