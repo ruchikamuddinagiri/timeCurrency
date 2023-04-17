@@ -136,20 +136,25 @@ router.post('/api/auth/register', async (req, res) => {
 })
 
 //log in
-router.post('/api/auth/login', auth, async (req, res) => {
+router.post('/api/auth/login', async (req, res) => {
     try{
         //find user by email id and password in req.body
 
         const user = await User.findByCredentials(req.body.email, req.body.password)
         //create token for the user
+        console.log(req.body);
+
         const token = await user.generateAuthToken()
-        
+        console.log(token);
         res.cookie('auth_token', token)
         
         res.send({user, token})
 
-    } catch(e) {
+    } catch(e) 
+           {
+            console.log(e);
         res.status(400).send()
+
     }
 })
 

@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import HomePage from './HomePage'
-import Sidebar from '../components/Sidebar'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useAuthStore from '../store';
@@ -14,13 +12,13 @@ const Logout = () => {
   
   useEffect(() => {
       authStore.setRequestLoading(true);
-      api.get<ApiResponse>("/auth/logout").then((reponse) => {
+      api.post<ApiResponse>("/auth/logout").then((reponse) => {
         authStore.setRequestLoading(false);
         toast.success("Successfully logged out", {
           position: "top-right",
         });
         navigate("/");
-      }).catch((error) => {
+      }) .catch((error) => {
         toast.error("Cannot Log out user Due to error!", {
           position: "top-right",
         });

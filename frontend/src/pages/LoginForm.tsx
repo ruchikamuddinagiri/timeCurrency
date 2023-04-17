@@ -49,6 +49,7 @@ const LoginPage = () => {
       appStore.setRequestLoading(false);
       navigate("/mainpage");
     } catch (error: any) {
+      console.log(error);
       appStore.setRequestLoading(false);
       const resMessage =
         (error.response &&

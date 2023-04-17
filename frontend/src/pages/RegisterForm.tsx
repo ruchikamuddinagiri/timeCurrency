@@ -56,11 +56,7 @@ const RegisterPage = () => {
       toast.success("User Succesfully registered", {
         position: "top-left",
       });
-<<<<<<< Updated upstream
-       navigate("/emailverification");
-=======
       //navigate("/emailverification");
->>>>>>> Stashed changes
     } catch (error: any) {
       console.log(error)
       appStore.setRequestLoading(false);
