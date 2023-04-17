@@ -8,6 +8,11 @@ module.exports = {
     transform: {
       "^.+\\.tsx?$": "ts-jest"
     },
+
+    
+    testEnvironment: 'jest-environment-jsdom',
+  
+    
   
     // Runs special logic, such as cleaning up components
     // when using React Testing Library and adds special
