@@ -6,6 +6,8 @@ interface FormInputProps {
   inputName: string;
   inputType?: string;
   inputPlaceholder?: string;
+  onChange? : any,
+  methods: any,
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -13,8 +15,9 @@ const FormInput: React.FC<FormInputProps> = ({
   inputName,
   inputType = 'text',
   inputPlaceholder = '',
+  methods
 }) => {
-  const { register, formState: { errors } } = useFormContext();
+  const { formState: { errors } } = useFormContext();
 
   const renderErrorMessage = (error: any) => {
     return (
@@ -36,7 +39,7 @@ const FormInput: React.FC<FormInputProps> = ({
         id={inputName}
         placeholder={inputPlaceholder}
         className='block w-full py-2 px-4 rounded-md bg-gray-100 border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent'
-        {...register(inputName)}
+        {...methods.register(inputName)}
       />
       {renderErrorMessage(errors[inputName])}
     </div>

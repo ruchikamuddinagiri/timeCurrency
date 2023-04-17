@@ -87,17 +87,19 @@ const RegisterPage = () => {
             onSubmit={handleSubmit(onSubmitHandler)}
             className="max-w-md w-full mx-auto overflow-hidden shadow-lg bg-ct-dark-200 squared-2x2 p-8 space-y-5"
           >
-            <FormInput labelText="Full Name" inputName="name" />
-            <FormInput labelText="Email" inputName="email" inputType="email" />
+            <FormInput labelText="Full Name" inputName="name" methods={methods}/>
+            <FormInput labelText="Email" inputName="email" inputType="email" methods={methods}/>
             <FormInput
               labelText="Password"
               inputName="password"
               inputType="password"
+              methods={methods}
             />
             <FormInput
               labelText="Confirm Password"
               inputName="passwordConfirm"
               inputType="password"
+              methods={methods}
             />
             <span className="block">
               Existing User?{" "}
