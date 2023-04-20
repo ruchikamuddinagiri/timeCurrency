@@ -4,12 +4,11 @@ import { toast } from "react-toastify";
 import { api } from "../api/authApi";
 import { ApiResponse } from "../api/types";
 import useStore from "../store";
-import Sidebar from "../components/Sidebar"
+import Sidebar from "../components/Sidebar";
 import { Button } from "react-bootstrap";
 
 const ProfilePage = () => {
   const store = useStore();
-  //const navigate = useNavigate();
 
   const getUser = async () => {
     try {
@@ -39,26 +38,23 @@ const ProfilePage = () => {
 
   return (
     <>
-    <Sidebar/>
-    
-    <section className="bg-ct-blue-600  min-h-screen pt-20">
-      <div className="max-w-4xl mx-auto bg-ct-dark-100 rounded-md h-[20rem] flex justify-center items-center">
-        <div>
-          <p className="text-5xl font-semibold">Profile Page</p>
-          <div className="mt-8">
-            <p className="mb-4">ID: {user?.id}</p>
-            <p className="mb-4">Name: {user?.name}</p>
-            <p className="mb-4">Email: {user?.email}</p>
-          
+      <Sidebar />
+
+      <section className="bg-ct-blue-600  min-h-screen pt-20">
+        <div className="max-w-4xl mx-auto bg-ct-dark-100 rounded-md h-[20rem] flex justify-center items-center">
+          <div>
+            <p className="text-5xl font-semibold">Profile Page</p>
+            <div className="mt-8">
+              <p className="mb-4">ID: {user?.id}</p>
+              <p className="mb-4">Name: {user?.name}</p>
+              <p className="mb-4">Email: {user?.email}</p>
+            </div>
+          </div>
+          <div className="button-container d-flex justify-content-between">
+            <Button variant="danger">Edit</Button>
           </div>
         </div>
-        <div className="button-container d-flex justify-content-between">
-          <Button variant="danger" >
-            Edit
-          </Button> 
-          </div>
-      </div>
-    </section>
+      </section>
     </>
   );
 };

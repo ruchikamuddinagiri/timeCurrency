@@ -9,8 +9,7 @@
     "build": "react-scripts build",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:update": "jest -u",
-    "eject": "react-scripts eject"
+    "test:update": "jest -u"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.7",
@@ -18,8 +17,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "chart.js": "^4.2.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.34.2",
     "react-icons": "^4.8.0",
