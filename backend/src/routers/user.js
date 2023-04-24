@@ -9,49 +9,49 @@ const { hostname } = require('os')
 const router = new express.Router()
 
 //email verification
-router.post('/api/verify', async (req, res)=>{
+// router.post('/api/verify', async (req, res)=>{
 
-    //get user based on email
-    const email = req.body.email
-    const user = await User.findOne({email})
+//     //get user based on email
+//     const email = req.body.email
+//     const user = await User.findOne({email})
 
-    //create verification token for the user
-    const verificationToken = jwt.sign({_id: user._id.toString() }, process.env.JWT_SECRET)
+//     //create verification token for the user
+//     const verificationToken = jwt.sign({_id: user._id.toString() }, process.env.JWT_SECRET)
     
-    //save this token in the database
-    await user.updateOne({verificationToken:verificationToken})
+//     //save this token in the database
+//     await user.updateOne({verificationToken:verificationToken})
 
-    const updatedUser = await User.findOne({email})
+//     const updatedUser = await User.findOne({email})
 
-    host=req.get('host')
-    link="http://"+req.get('host')+"/api/verify/?id="+verificationToken
-    console.log(link)
+//     host=req.get('host')
+//     link="http://"+req.get('host')+"/api/verify/?id="+verificationToken
+//     console.log(link)
 
-    sgMail.setApiKey("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")
+//     sgMail.setApiKey("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")
 
-    const msg = {
-        to: email, // Change to your recipient
-        from: 'rrmuddinagiri@gmail.com', // Change to your verified sender
-        subject: 'Verify your TimeCurrency email address',
-        text: 'Click on the link below to verify your email address',
-        html: '<a href="'+link+'">Verify!</a>',
-      }
+//     const msg = {
+//         to: email, // Change to your recipient
+//         from: 'rrmuddinagiri@gmail.com', // Change to your verified sender
+//         subject: 'Verify your TimeCurrency email address',
+//         text: 'Click on the link below to verify your email address',
+//         html: '<a href="'+link+'">Verify!</a>',
+//       }
 
-      sgMail
-        .send(msg)
-        .then(() => {
-            console.log(req.get(hostname))
-            console.log('Email sent')
+//       sgMail
+//         .send(msg)
+//         .then(() => {
+//             console.log(req.get(hostname))
+//             console.log('Email sent')
            
-        })
-        .catch((error) => {
-            console.error(error)
-        })
+//         })
+//         .catch((error) => {
+//             console.error(error)
+//         })
         
-        res.end()
+//         res.end()
     
 
-})
+// })
 
 //verify user
 router.get('/api/verify', async (req, res)=>{
@@ -82,7 +82,7 @@ router.get('/api/verify', async (req, res)=>{
             }
         } catch(error){
             //token not found for the user, ask to register again
-            res.sendStatus(404)
+            res.status(404).send({ error: error })
             //res.redirect(req.get(host)+":3000/register")
         }
     }
@@ -131,32 +131,74 @@ router.post('/api/auth/register', async (req, res) => {
         res.status(201).send({user, token})
     } catch(e){
         console.log(e)
-        res.status(400).send(e)
+        res.status(400).send({ error: e })
     }
 })
 
 //log in
 router.post('/api/auth/login', async (req, res) => {
     try{
+        console.log(req.body)
         //find user by email id and password in req.body
 
         const user = await User.findByCredentials(req.body.email, req.body.password)
+        console.log(user, req.body)
         //create token for the user
         console.log(req.body);
 
         const token = await user.generateAuthToken()
-        console.log(token);
+        console.log(token)
         res.cookie('auth_token', token)
         
         res.send({user, token})
 
-    } catch(e) 
-           {
-            console.log(e);
-        res.status(400).send()
+    } catch(e) {
+        console.log(e)
+        res.status(400).send({ error: e })
 
     }
 })
+
+
+router.get('/api/auth/profile', auth,  (req, res)=>{
+    try{
+        if(!req.user){
+            res.status(404).send("req.user not populated. User must log in")
+        }
+        let user = {
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email
+        }
+        res.status(200).send(user)
+    } catch(e){
+        res.status(500).send({ error: e })
+    }
+    
+    
+    //console.log(req.user._id, req.user.name, req.user.email)
+    
+   
+})
+
+//update profile
+router.patch("/api/auth/updateProfile", auth, async (req, res) => {
+    try {
+      const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+  
+      if (!user) {
+        //send 404
+        return res.status(404).send();
+      }
+      res.send(user);
+    } catch (e) {
+      console.log(e);
+      res.status(400).send({ error: e });
+    }
+  });
 
 //logout
 router.post('/api/auth/logout', auth, async(req,res)=>{
@@ -169,7 +211,7 @@ router.post('/api/auth/logout', auth, async(req,res)=>{
         await req.user.save()
         res.status(200).send()
     }catch(e){
-        res.status(500).send()
+        res.status(500).send({ error: e })
     }
 })
 
