@@ -73,7 +73,6 @@ const RegisterPage = () => {
   };
 
   const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
-    //console.log("I was called");
     registerUser(values);
   };
 

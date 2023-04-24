@@ -1,23 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../api/authApi";
-import { ApiResponse } from "../api/types";
-import useStore from "../store";
+import { ApiResponse, User } from "../api/types";
 import Sidebar from "../components/Sidebar";
 import { Button } from "react-bootstrap";
+import styled from "styled-components";
+const RoundedButton = styled(Button)`
+
+background-color: black;
+color: white;
+font-size: 16px;
+padding: 12px 24px;
+transition: all 0.2s ease-in-out;
+&:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+`;
+
+interface UserData {
+  id: string;
+  name: string;
+  email: string;
+}
 
 const ProfilePage = () => {
-  const store = useStore();
+  const [userData, setUserData] = useState<UserData>({
+    id: '',
+    name: '',
+    email: '',
+  });
 
   const getUser = async () => {
     try {
-      store.setRequestLoading(true);
-      const response = await api.get<ApiResponse>("/profile");
-      store.setRequestLoading(false);
-      store.setAuthUser(response.data.data.user);
+      const response = await api.get<UserData>("/auth/profile");
+
+      setUserData({
+        id: response.data.id,
+        name: response.data.name,
+        email: response.data.email,
+      });
     } catch (error: any) {
-      store.setRequestLoading(false);
       const resMessage =
         (error.response &&
           error.response.data &&
@@ -29,29 +54,48 @@ const ProfilePage = () => {
       });
     }
   };
+  
+  
+  const onClickEdit = () => {
+    //setShowEdit(true);
+  };
+
 
   useEffect(() => {
     getUser();
   }, []);
 
-  const user = store.authUser;
-
   return (
     <>
       <Sidebar />
 
-      <section className="bg-ct-blue-600  min-h-screen pt-20">
+      <section
+        className="bg-ct-blue-700 bg-cover bg-center min-h-screen pt-20"
+
+      >
         <div className="max-w-4xl mx-auto bg-ct-dark-100 rounded-md h-[20rem] flex justify-center items-center">
-          <div>
-            <p className="text-5xl font-semibold">Profile Page</p>
-            <div className="mt-8">
-              <p className="mb-4">ID: {user?.id}</p>
-              <p className="mb-4">Name: {user?.name}</p>
-              <p className="mb-4">Email: {user?.email}</p>
+          <div className="text-center">
+            <p className="text-4xl font-semibold text-black mb-8">Profile Page</p>
+            <div className="bg-grey rounded-md p-4">
+              {/* <p className="mb-4">
+                <strong>ID:</strong> {userData?.id}
+              </p> */}
+              <p className="mb-4">
+                <strong>Name:</strong> {userData?.name}
+              </p>
+              <p className="mb-4">
+                <strong>Email:</strong> {userData?.email}
+              </p>
+              <div className="mt-8">
+              <RoundedButton
+            variant="danger"
+            onClick={onClickEdit}
+            style={{ backgroundColor: "black", color: "white" }}
+          >
+            Edit
+          </RoundedButton> 
+              </div>
             </div>
-          </div>
-          <div className="button-container d-flex justify-content-between">
-            <Button variant="danger">Edit</Button>
           </div>
         </div>
       </section>

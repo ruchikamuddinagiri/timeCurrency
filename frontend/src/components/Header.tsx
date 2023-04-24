@@ -1,15 +1,10 @@
-import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import useAuthStore from "../store";
 import Spinner from "./Spinner";
-import { api } from "../api/authApi";
-import { ApiResponse } from "../api/types";
 
 const Header = () => {
   const authStore = useAuthStore();
   const user = authStore.authUser;
-
-  
 
   return (
     <>

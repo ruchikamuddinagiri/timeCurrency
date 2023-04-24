@@ -190,8 +190,7 @@ export default function Analytics() {
 
   return (
     <>
-      <Sidebar />
-
+      <Sidebar />  
       <RowContainer>
       <ChartContainer>
         <PieChart chartData={displayData} />
@@ -209,7 +208,7 @@ export default function Analytics() {
             style={{ backgroundColor: "black", color: "white" }}
           >
             Show All Data
-          </RoundedButton>
+          </RoundedButton>  
         </ButtonContainer>
         <Calendar date={date} onChange={handleSelect} />
       </CalendarContainer>

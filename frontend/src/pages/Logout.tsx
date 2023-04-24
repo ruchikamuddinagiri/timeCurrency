@@ -18,14 +18,8 @@ const Logout = () => {
           position: "top-right",
         });
         navigate("/");
-      }) .catch((error) => {
-        toast.error("Cannot Log out user Due to error!", {
-          position: "top-right",
-        });
-        
-      });
+      }) 
   }, []);
-
   return (
     <div>Logout</div>
   )

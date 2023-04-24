@@ -90,6 +90,7 @@ const TasksPage: React.FC = () => {
 
         <RightSection>
           <section className="bg-ct-black-600 min-h-screen grid place-items-center">
+            
             <div className="w-full">
               <h1 className="text-4xl xl:text-6xl text-center font-[600] text-ct-black-600 mb-4">
                 Tasks
