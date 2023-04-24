@@ -90,5 +90,16 @@ html{
   
 }
 
+.calendar-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.button-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
   
 

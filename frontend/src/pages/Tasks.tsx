@@ -24,11 +24,6 @@ const RightSection = styled.div`
   width: 50%;
 `;
 
-interface TimeRecord {
-  punchIn: Date | undefined;
-  punchOut: Date | undefined;
-}
-
 export const registerTasksSchema = zObject({
   categories: zString().min(1, "Select the categories").max(100),
   taskName: zString().min(1, "Task Name is required"),
@@ -54,11 +49,6 @@ const TasksPage: React.FC = () => {
     resolver: zodResolver(registerTasksSchema),
   });
 
-  const [timeRecord, setTimeRecord] = useState<TimeRecord>({
-    punchIn: undefined,
-    punchOut: undefined,
-  });
-
   const [tasksList, setTasksList] = useState<TaskDataType[]>([]);
 
   const [updateTasksList, setUpdateTaskList] = useState<boolean>(true);
@@ -79,24 +69,7 @@ const TasksPage: React.FC = () => {
     reset();
     return undefined;
   };
-
-  const { punchIn, punchOut } = timeRecord;
-
-  const [loggedInTime, setLoggedInTime] = useState<number | undefined>(
-    undefined
-  );
-
-  const [punchText, setPunchText] = useState<string | undefined>(undefined);
-
   const { reset, handleSubmit } = methods;
-
-  useEffect(() => {
-    setLoggedInTime(
-      punchIn && punchOut
-        ? (punchOut.getTime() - punchIn.getTime()) / 1000
-        : undefined
-    );
-  }, [timeRecord]);
 
   const onSubmitHandler: SubmitHandler<TaskSchema> = (values) => {
     handlePunch(values);
@@ -107,7 +80,6 @@ const TasksPage: React.FC = () => {
       <Sidebar />
       <SplitContainer>
         <LeftSection>
-          <div>{punchText}</div>
           <TaskProgress
             tasks={tasksList}
             setTasksList={setTasksList}

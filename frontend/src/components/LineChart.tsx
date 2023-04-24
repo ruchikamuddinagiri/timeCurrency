@@ -33,6 +33,6 @@ const LineChart = ({ chartData }: LineChartProps) => {
       />
     </div>
   );
-}
+};
 
 export default LineChart;

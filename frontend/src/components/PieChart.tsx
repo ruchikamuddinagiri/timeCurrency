@@ -1,4 +1,4 @@
-import { Line, Pie } from "react-chartjs-2";
+import { Doughnut, Line, Pie } from "react-chartjs-2";
 
 interface PieChartProps {
   chartData: {
@@ -17,7 +17,7 @@ const PieChart = ({ chartData }: PieChartProps) => {
   return (
     <div className="chart-container">
       <h2 style={{ textAlign: "center" }}>Pie Chart</h2>
-      <Pie
+      <Doughnut
         data={chartData}
         options={{
           plugins: {
@@ -26,8 +26,11 @@ const PieChart = ({ chartData }: PieChartProps) => {
               text: "Most Time Spent In Categories",
             },
             legend: {
-                display: false,
+                display: true,
                 
+            },
+            tooltip: {
+              enabled: true,
             },
           },
           
@@ -35,6 +38,6 @@ const PieChart = ({ chartData }: PieChartProps) => {
       />
     </div>
   );
-}
+};
 
 export default PieChart;
