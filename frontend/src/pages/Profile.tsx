@@ -120,6 +120,7 @@ const ProfilePage = () => {
       <section className="bg-ct-blue-700 bg-cover bg-center min-h-screen pt-20">
         <div className="max-w-4xl mx-auto bg-ct-dark-100 rounded-md h-[20rem] flex justify-center items-center">
           <div className="text-center">
+          <img src= "./src/assets/profilepic.jpeg" alt="Profile picture" className="rounded-full h-32 w-32 mb-8 mx-auto" />
             <p className="text-4xl font-semibold text-black mb-8">
               Profile Page
             </p>

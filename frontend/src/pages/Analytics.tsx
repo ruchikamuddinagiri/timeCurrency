@@ -117,7 +117,7 @@ export default function Analytics() {
         const startTime = new Date(task.startTime);
 
         const taskTime = Math.abs(
-          (endTime.getTime() - startTime.getTime()) / (1000 * 60)
+          (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60)
         );
 
         console.log(showAll);
