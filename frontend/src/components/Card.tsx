@@ -178,9 +178,11 @@ const TaskCard: React.FC<TaskCardProps> = (props: TaskCardProps) => {
               <Button variant="danger" onClick={props.onDeleteClick}>
                 Delete
               </Button>
+              {props.task.status != 'Completed' ? (
               <Button variant="primary" onClick={props.onClickPunchOut}>
                 Punch Out
               </Button>
+              ): " "}
             </>
           )}
         </div>
