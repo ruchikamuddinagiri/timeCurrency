@@ -14,6 +14,8 @@ html{
     font-family: 'Poppins', sans-serif;
 }
 
+
+
 .task-card {
   margin-bottom: 20px;
   border: 1px solid #ccc;
@@ -101,6 +103,19 @@ html{
   text-align: center;
 }
 
+.clock{
+  padding-top: 5%;
+  text-align: center;
+  display: inline-block;
+  width: 25%;
+}
+.affirmation {
+  text-align: center;
+  display: inline-block;
+  width: 75%;
+}
 
-  
-
+.profile_picture{
+  width: 200px;
+  height: 200px;
+}

@@ -30,6 +30,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    targetHours:{
+        type: Number,
+        default: 0
+    },
+    profile_picture_url:{
+        type: String,
+        default: "https://time-currency.s3.us-east-2.amazonaws.com/placeholder.png"
+    },
     tokens:[{
         token: {
             type: String,

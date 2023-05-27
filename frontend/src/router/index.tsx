@@ -10,6 +10,7 @@ import Tasks from "../pages/Tasks";
 import ProfilePage from "../pages/Profile";
 import Analytics from "../pages/Analytics";
 import Logout from "../pages/Logout";
+import Feed from "../pages/Feed";
 
 const routes: RouteObject[] = [
   { path: '/', element: <HomePage /> },
@@ -21,7 +22,8 @@ const routes: RouteObject[] = [
   { path: '/tasks', element: <Tasks /> },
   { path: '/profile', element: <ProfilePage />},
   { path: '/analytics', element: <Analytics />},
-  { path: '/logout', element: <Logout />}
+  { path: '/logout', element: <Logout />},
+  { path: '/feed', element: <Feed />}
   //{ path: '*', element: <NotFoundPage /> }
 ];
 

@@ -5,6 +5,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 
 
 const SidebarData = [  {   title: 'Home', path: '/mainpage',   icon: <FaBars />,  },
+                      {   title: 'Feed', path: '/feed',   icon: <FaBars />,  },
                       {    title: 'Tasks',    path: '/tasks',      icon: <FaBars />,  },  
                       {    title: 'Analytics',path: '/analytics',  icon: <FaBars />,  },
                       {  title: 'Profile',    path: '/profile',     icon: <FaBars />,  },                    

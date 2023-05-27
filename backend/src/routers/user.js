@@ -8,6 +8,10 @@ const { hostname } = require('os')
 
 const router = new express.Router()
 
+router.get('/', (req, res)=>{
+    res.send("Hello world")
+})
+
 //email verification
 // router.post('/api/verify', async (req, res)=>{
 
@@ -160,17 +164,14 @@ router.post('/api/auth/login', async (req, res) => {
 })
 
 
-router.get('/api/auth/profile', auth,  (req, res)=>{
+router.get('/api/auth/profile', auth, async (req, res)=>{
     try{
         if(!req.user){
             res.status(404).send("req.user not populated. User must log in")
         }
-        let user = {
-        id: req.user._id,
-        name: req.user.name,
-        email: req.user.email
-        }
-        res.status(200).send(user)
+        let user = await User.find({_id: req.user._id})
+        console.log(user[0])
+        res.status(200).send(user[0])
     } catch(e){
         res.status(500).send({ error: e })
     }
@@ -179,6 +180,20 @@ router.get('/api/auth/profile', auth,  (req, res)=>{
     //console.log(req.user._id, req.user.name, req.user.email)
     
    
+})
+
+//add profile picture
+router.get('/api/addProfilePicture', auth, async (req, res)=>{
+    try{
+        
+        const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+            new: true,
+            runValidators: true,
+          });
+
+    } catch(e){
+
+    }
 })
 
 //update profile

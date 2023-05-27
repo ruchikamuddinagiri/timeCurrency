@@ -1,5 +1,6 @@
 import Sidebar from '../components/Sidebar'
 
+(window as any).global = window;
 const MainPage = () => {
   console.log()
   return (

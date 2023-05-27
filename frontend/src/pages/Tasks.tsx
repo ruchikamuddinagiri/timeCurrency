@@ -10,6 +10,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiResponse } from "../api/types";
 import { api } from "../api/authApi";
 import TaskProgress from "../components/TaskProgress";
+import Clock from "../components/Clock";
+import axios from 'axios';
+
+let affirmations: any = await api.get<ApiResponse>("/affirmation");
+affirmations = affirmations.data.response.affirmation
 
 const SplitContainer = styled.div`
   display: flex;
@@ -75,10 +80,15 @@ const TasksPage: React.FC = () => {
     handlePunch(values);
   };
 
+
+
   return (
     <>
       <Sidebar />
+      
+      
       <SplitContainer>
+      
         <LeftSection>
           <TaskProgress
             tasks={tasksList}
@@ -87,8 +97,22 @@ const TasksPage: React.FC = () => {
             setUpdateTaskList={setUpdateTaskList}
           />
         </LeftSection>
-
+      
         <RightSection>
+          <div className="float-container">
+          {/* <Clock /> */}
+          <center>
+          <div className = "affirmation" style={{
+        background: "grey",
+        color: "white",
+        padding: "10px",
+        margin: "10px"
+        
+    }}>{affirmations}</div>
+          </center>
+         
+          </div>
+                 
           <section className="bg-ct-black-600 min-h-screen grid place-items-center">
             
             <div className="w-full">

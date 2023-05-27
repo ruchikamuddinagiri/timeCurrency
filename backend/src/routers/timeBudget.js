@@ -2,8 +2,25 @@ const express = require('express')
 const Task = require('../models/tasks')
 const auth = require('../middleware/auth')
 const path = require('path')
+const axios = require("axios")
+const { stringify } = require('querystring')
 
 const router = new express.Router()
+
+
+router.get("/api/affirmation", async (req, res)=>{
+    try{
+        await axios.get("https://www.affirmations.dev").then((response)=>{
+            response = response.data
+            res.status(200).send({response})
+        }).catch((e)=>{
+            console.log(e)
+            res.status(500).send("It's not you, it's us.")
+        })
+    } catch(e){
+        res.status(500).send("It's not you, it's us.")
+    }
+})
 
 //create time budget
 router.post('/api/addTask', auth, async (req, res)=>{
@@ -25,6 +42,7 @@ router.post('/api/addTask', auth, async (req, res)=>{
 //get time budgets
 router.get('/api/tasks', auth, async (req, res)=>{
     try{
+        console.log(req.user._id)
         const tasks = await Task.find({owner: req.user._id})
         console.log(tasks)
         res.send({tasks})
