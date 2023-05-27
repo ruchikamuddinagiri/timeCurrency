@@ -18,8 +18,8 @@ const bucketRegion = "us-east-2"
 AWS.config.update({
   region: bucketRegion,
   credentials:{
-    accessKeyId:"AKIAUQY7XX7WJVZ6RPFB",
-    secretAccessKey:"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",
+    accessKeyId:"",
+    secretAccessKey:"",
   } 
 });
 
