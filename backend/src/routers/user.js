@@ -31,7 +31,7 @@ router.get('/', (req, res)=>{
 //     link="http://"+req.get('host')+"/api/verify/?id="+verificationToken
 //     console.log(link)
 
-//     sgMail.setApiKey("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")
+//     sgMail.setApiKey("")
 
 //     const msg = {
 //         to: email, // Change to your recipient
@@ -111,7 +111,7 @@ router.post('/api/auth/register', async (req, res) => {
         link="http://"+req.get('host')+"/api/verify/?id="+verificationToken
         console.log(link)
 
-        sgMail.setApiKey("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")
+        sgMail.setApiKey("")
 
         const msg = {
             to: req_user.email, // Change to your recipient
